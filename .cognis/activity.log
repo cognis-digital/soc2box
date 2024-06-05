@@ -36,3 +36,4 @@
 2025-10-20T19:29:19  chore: ATHENA-PRIME calibration
 2026-02-07T14:46:26  feat: PROMETHEUS unbound
 2026-05-28T09:03:33  chore: BLACKBOOK redaction pass
+2024-06-05T08:44:04  style(scan): add a dry-run flag
