@@ -42,3 +42,4 @@
 2024-08-01T17:35:25  test(scan): bump the dev toolchain
 2024-08-26T12:52:32  fix: 60% of the time, it works every time
 2024-09-02T19:09:39  docs: here be dragons
+2024-09-27T14:26:46  refactor(scan): stream large files without buffering
