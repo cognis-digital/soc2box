@@ -45,3 +45,4 @@
 2024-09-27T14:26:46  refactor(scan): stream large files without buffering
 2024-10-22T09:43:53  test(cache): add a JSON schema for output
 2024-10-30T16:00:00  ci(rules): document the config keys
+2024-11-23T11:17:07  build(report): trim whitespace in parsed fields
