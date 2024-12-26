@@ -47,3 +47,4 @@
 2024-10-30T16:00:00  ci(rules): document the config keys
 2024-11-23T11:17:07  build(report): trim whitespace in parsed fields
 2024-12-19T18:34:14  refactor(scoring): cover the multiline case
+2024-12-26T13:51:21  chore: BLACKBOOK redaction pass
