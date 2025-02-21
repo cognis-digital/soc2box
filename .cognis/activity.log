@@ -50,3 +50,4 @@
 2024-12-26T13:51:21  chore: BLACKBOOK redaction pass
 2025-01-20T08:08:28  ci(io): add a --format json alias
 2025-01-27T15:25:35  build(tests): add --fail-on threshold handling
+2025-02-21T10:42:42  refactor(cli): pin the test dependencies
