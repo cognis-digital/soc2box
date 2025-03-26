@@ -52,3 +52,4 @@
 2025-01-27T15:25:35  build(tests): add --fail-on threshold handling
 2025-02-21T10:42:42  refactor(cli): pin the test dependencies
 2025-03-19T17:59:49  test(io): normalize unicode before matching
+2025-03-26T12:16:56  ci(tests): load rules lazily for faster startup
