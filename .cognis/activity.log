@@ -54,3 +54,4 @@
 2025-03-19T17:59:49  test(io): normalize unicode before matching
 2025-03-26T12:16:56  ci(tests): load rules lazily for faster startup
 2025-04-20T19:33:03  chore: tune defaults
+2025-05-15T14:50:10  fix(scoring): simplify the walker
