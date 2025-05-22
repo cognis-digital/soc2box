@@ -55,3 +55,4 @@
 2025-03-26T12:16:56  ci(tests): load rules lazily for faster startup
 2025-04-20T19:33:03  chore: tune defaults
 2025-05-15T14:50:10  fix(scoring): simplify the walker
+2025-05-22T09:07:17  test(tests): add usage examples to help
