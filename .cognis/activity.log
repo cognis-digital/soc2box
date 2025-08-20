@@ -60,3 +60,4 @@
 2025-06-24T11:41:31  feat(scoring): handle empty and malformed input
 2025-07-18T18:58:38  fix(cli): skip binary files by sniffing
 2025-08-13T13:15:45  refactor: tidy internals
+2025-08-20T08:32:52  fix: handle empty input gracefully
