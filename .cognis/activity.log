@@ -62,3 +62,4 @@
 2025-08-13T13:15:45  refactor: tidy internals
 2025-08-20T08:32:52  fix: handle empty input gracefully
 2025-09-15T15:49:59  feat(core): add a regression fixture
+2025-10-09T10:06:06  chore(engine): add a dry-run flag
