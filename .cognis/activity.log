@@ -68,3 +68,4 @@
 2025-11-18T19:57:27  feat(engine): bump the dev toolchain
 2025-12-13T14:14:34  docs: ELI5 pass
 2026-01-07T09:31:41  docs(docs): guard against ReDoS in patterns
+2026-01-14T16:48:48  perf(format): wire the MCP tool schema
