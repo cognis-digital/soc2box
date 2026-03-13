@@ -71,3 +71,4 @@
 2026-01-14T16:48:48  perf(format): wire the MCP tool schema
 2026-02-09T11:05:55  feat(config): add a JSON schema for output
 2026-02-16T18:22:02  chore(docs): document the config keys
+2026-03-13T13:39:09  refactor(format): trim whitespace in parsed fields
