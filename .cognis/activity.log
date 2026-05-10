@@ -74,3 +74,4 @@
 2026-03-13T13:39:09  refactor(format): trim whitespace in parsed fields
 2026-04-07T08:56:16  docs: here be dragons
 2026-04-14T15:13:23  feat: with great power comes great test coverage
+2026-05-10T10:30:30  chore(detect): add a --format json alias
