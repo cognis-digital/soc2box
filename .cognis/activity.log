@@ -75,3 +75,4 @@
 2026-04-07T08:56:16  docs: here be dragons
 2026-04-14T15:13:23  feat: with great power comes great test coverage
 2026-05-10T10:30:30  chore(detect): add a --format json alias
+2026-06-03T17:47:37  refactor(fixtures): add --fail-on threshold handling
