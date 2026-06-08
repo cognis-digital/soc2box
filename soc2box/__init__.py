@@ -1,35 +1,11 @@
-"""SOC2BOX - Self-hosted SOC 2 evidence collector and control tracker.
-
-A zero-dependency engine for tracking SOC 2 Trust Services Criteria controls,
-collecting and aging evidence, and reporting audit readiness.
-"""
-from .core import (
-    Control,
-    Evidence,
-    Program,
-    DEFAULT_CONTROLS,
-    load_program,
-    save_program,
-    add_evidence,
-    control_status,
-    program_readiness,
-    gap_list,
-)
-
-TOOL_NAME = "soc2box"
-TOOL_VERSION = "1.0.0"
-
-__all__ = [
-    "Control",
-    "Evidence",
-    "Program",
-    "DEFAULT_CONTROLS",
-    "load_program",
-    "save_program",
-    "add_evidence",
-    "control_status",
-    "program_readiness",
-    "gap_list",
-    "TOOL_NAME",
-    "TOOL_VERSION",
-]
+"""soc2box — part of the Cognis Neural Suite."""
+try:  # re-export the tool's public API + identity from core
+    from soc2box.core import *  # noqa: F401,F403
+except Exception:  # pragma: no cover
+    pass
+try:
+    from soc2box.core import TOOL_NAME, TOOL_VERSION
+except Exception:  # pragma: no cover
+    TOOL_NAME = "soc2box"
+    TOOL_VERSION = "0.1.0"
+__version__ = TOOL_VERSION
