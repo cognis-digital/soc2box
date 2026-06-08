@@ -36,9 +36,14 @@ hottest GRC niche, self-host
 <a name="features"></a>
 ## Features
 
-- ✅ Todo
-- ✅ Fixme
-- ✅ Xxx
+- ✅ New Program
+- ✅ Program To Dict
+- ✅ Program From Dict
+- ✅ Load Program
+- ✅ Save Program
+- ✅ Add Evidence
+- ✅ Control Status
+- ✅ Program Readiness
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
