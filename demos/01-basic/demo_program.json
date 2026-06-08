@@ -1,0 +1,116 @@
+{
+  "company": "Northwind SaaS",
+  "framework": "SOC 2 Type II",
+  "schema_version": 1,
+  "controls": [
+    {
+      "id": "CC1.1",
+      "category": "Control Environment",
+      "title": "Board oversight & integrity / ethics policy",
+      "cadence_days": 365,
+      "applicable": true,
+      "owner": "ceo",
+      "evidence": [
+        {"artifact": "confluence://policies/code-of-conduct", "collected_at": "2026-05-09T12:00:00+00:00", "collected_by": "sam", "note": "annual sign-off"}
+      ]
+    },
+    {
+      "id": "CC2.1",
+      "category": "Communication",
+      "title": "Internal security policies communicated to staff",
+      "cadence_days": 365,
+      "applicable": true,
+      "owner": "",
+      "evidence": []
+    },
+    {
+      "id": "CC4.1",
+      "category": "Monitoring",
+      "title": "Ongoing monitoring / vulnerability scans",
+      "cadence_days": 30,
+      "applicable": true,
+      "owner": "jordan",
+      "evidence": [
+        {"artifact": "s3://evidence/nessus-2026-04-24.pdf", "collected_at": "2026-04-24T09:00:00+00:00", "collected_by": "jordan", "note": "prior scan"}
+      ]
+    },
+    {
+      "id": "CC5.2",
+      "category": "Control Activities",
+      "title": "Technology controls over infrastructure",
+      "cadence_days": 90,
+      "applicable": true,
+      "owner": "",
+      "evidence": []
+    },
+    {
+      "id": "CC6.1",
+      "category": "Logical Access",
+      "title": "Logical access provisioning & MFA",
+      "cadence_days": 90,
+      "applicable": true,
+      "owner": "jordan",
+      "evidence": [
+        {"artifact": "okta://reports/mfa-coverage", "collected_at": "2026-06-03T08:00:00+00:00", "collected_by": "jordan", "note": "100% MFA"}
+      ]
+    },
+    {
+      "id": "CC6.2",
+      "category": "Logical Access",
+      "title": "User access reviews / least privilege",
+      "cadence_days": 90,
+      "applicable": true,
+      "owner": "",
+      "evidence": []
+    },
+    {
+      "id": "CC6.3",
+      "category": "Logical Access",
+      "title": "Access removal on termination",
+      "cadence_days": 90,
+      "applicable": true,
+      "owner": "",
+      "evidence": []
+    },
+    {
+      "id": "CC7.2",
+      "category": "System Operations",
+      "title": "Security incident detection & alerting",
+      "cadence_days": 30,
+      "applicable": true,
+      "owner": "jordan",
+      "evidence": [
+        {"artifact": "datadog://monitors/security", "collected_at": "2026-02-08T08:00:00+00:00", "collected_by": "jordan", "note": "alert config screenshot"}
+      ]
+    },
+    {
+      "id": "CC7.3",
+      "category": "System Operations",
+      "title": "Incident response & remediation",
+      "cadence_days": 90,
+      "applicable": true,
+      "owner": "",
+      "evidence": []
+    },
+    {
+      "id": "CC8.1",
+      "category": "Change Management",
+      "title": "Change management / code review & approvals",
+      "cadence_days": 90,
+      "applicable": true,
+      "owner": "sam",
+      "evidence": [
+        {"artifact": "github://org/repo/branch-protection", "collected_at": "2026-05-29T08:00:00+00:00", "collected_by": "sam", "note": "PR review required"}
+      ]
+    },
+    {
+      "id": "A1.2",
+      "category": "Availability",
+      "title": "Backups & disaster recovery testing",
+      "cadence_days": 180,
+      "applicable": false,
+      "owner": "",
+      "evidence": []
+    }
+  ]
+}
