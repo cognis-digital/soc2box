@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: soc2box, labels: { app: soc2box } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: soc2box } }
+  template:
+    metadata: { labels: { app: soc2box } }
+    spec:
+      containers:
+        - name: soc2box
+          image: ghcr.io/cognis-digital/soc2box:latest
+          ports: [{ containerPort: 8000 }]
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: soc2box }
+spec:
+  selector: { app: soc2box }
+  ports: [{ port: 80, targetPort: 8000 }]
