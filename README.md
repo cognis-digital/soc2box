@@ -127,7 +127,17 @@ Pipes into your stack: **SARIF** for code-scanning, **JSON** for anything, an **
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="install-anywhere"></a>
-## Install anywhere
+## Install — every way, every platform
+
+```bash
+pip install "git+https://github.com/cognis-digital/soc2box.git"    # pip (works today)
+pipx install "git+https://github.com/cognis-digital/soc2box.git"   # isolated CLI
+uv tool install "git+https://github.com/cognis-digital/soc2box.git" # uv
+pip install cognis-soc2box                                          # PyPI (when published)
+docker run --rm ghcr.io/cognis-digital/soc2box:latest --help        # Docker
+brew install cognis-digital/tap/soc2box                             # Homebrew tap
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/soc2box/main/install.sh | sh
+```
 
 | Linux | macOS | Windows | Docker | Cloud |
 |---|---|---|---|---|
