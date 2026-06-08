@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/soc2box",
+  "version": "0.2.0",
+  "description": "JavaScript port of soc2box (Cognis Neural Suite)",
+  "bin": {
+    "soc2box": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}

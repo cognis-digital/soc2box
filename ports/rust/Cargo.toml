@@ -1,0 +1,9 @@
+[package]
+name = "soc2box"
+version = "0.2.0"
+edition = "2021"
+license = "LicenseRef-COCL-1.0"
+
+[[bin]]
+name = "soc2box"
+path = "src/main.rs"
