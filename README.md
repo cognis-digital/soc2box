@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-soc2box
+pip install "git+https://github.com/cognis-digital/soc2box.git"
 soc2box scan .            # → prioritized findings in seconds
 ```
 
@@ -53,7 +53,7 @@ hottest GRC niche, self-host
 ## Quick start
 
 ```bash
-pip install cognis-soc2box
+pip install "git+https://github.com/cognis-digital/soc2box.git"
 soc2box --version
 soc2box scan .                       # scan current project
 soc2box scan . --format json         # machine-readable
