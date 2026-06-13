@@ -20,6 +20,31 @@ pip install cognis-soc2box
 soc2box scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+1. **Install** the CLI (console script `soc2box`):
+   ```bash
+   pip install cognis-soc2box
+   ```
+2. **Initialize a program** — `init` seeds a program file (default `soc2_program.json`) with the default TSC controls:
+   ```bash
+   soc2box init --company "Acme Inc" --framework "SOC 2 Type II"
+   ```
+3. **Attach evidence to a control** — `add` records a dated artifact against a control id:
+   ```bash
+   soc2box add CC6.1 https://drive/screenshot.png --by jdoe --note "Q2 access review"
+   ```
+4. **Read status / readiness** — `status` shows per-control freshness, `report` gives the overall readiness %, and `gaps` lists what is missing/stale (exit `2` when gaps remain):
+   ```bash
+   soc2box report
+   soc2box status --format json | jq '.[] | select(.status!="satisfied")'
+   ```
+5. **Automate as an audit gate** — `gaps` returns nonzero while controls still need attention:
+   ```yaml
+   - run: pip install cognis-soc2box
+   - run: soc2box gaps  # nonzero exit until the control set is satisfied
+   ```
+
 ## Contents
 
 - [Why soc2box?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
