@@ -1,5 +1,4 @@
 """Smoke tests for SOC2BOX. Standard library only, no network, no temp services."""
-import json
 import os
 import sys
 import tempfile
