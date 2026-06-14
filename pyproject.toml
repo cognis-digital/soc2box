@@ -34,3 +34,6 @@ soc2box = "soc2box.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["soc2box"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
