@@ -121,5 +121,122 @@ class TestCli(unittest.TestCase):
             self.assertEqual(main(["--file", path, "add", "NOPE", "x"]), 1)
 
 
+class TestHardening(unittest.TestCase):
+    """Edge-case and error-path tests added during production hardening."""
+
+    # --- core: malformed / invalid input ---
+
+    def test_empty_artifact_raises(self):
+        """add_evidence must reject a blank artifact string."""
+        p = new_program()
+        with self.assertRaises(ValueError):
+            add_evidence(p, "CC6.1", "")
+        with self.assertRaises(ValueError):
+            add_evidence(p, "CC6.1", "   ")
+
+    def test_empty_company_raises(self):
+        with self.assertRaises(ValueError):
+            new_program(company="")
+        with self.assertRaises(ValueError):
+            new_program(company="   ")
+
+    def test_empty_framework_raises(self):
+        with self.assertRaises(ValueError):
+            new_program(framework="")
+
+    def test_program_from_dict_missing_required_control_field(self):
+        """A control JSON dict without 'id' must raise ValueError, not TypeError."""
+        from soc2box.core import program_from_dict
+        d = {
+            "company": "X",
+            "framework": "SOC 2",
+            "schema_version": 1,
+            "controls": [{"category": "C", "title": "T"}],
+        }
+        with self.assertRaises(ValueError):
+            program_from_dict(d)
+
+    def test_program_from_dict_extra_fields_ignored(self):
+        """A control with unknown extra fields must deserialise cleanly."""
+        from soc2box.core import program_from_dict
+        d = {
+            "company": "X",
+            "framework": "SOC 2",
+            "schema_version": 1,
+            "controls": [
+                {
+                    "id": "CC6.1",
+                    "category": "Logical Access",
+                    "title": "MFA",
+                    "cadence_days": 90,
+                    "applicable": True,
+                    "owner": "",
+                    "evidence": [],
+                    "future_field": "ignored",
+                }
+            ],
+        }
+        prog = program_from_dict(d)
+        self.assertIsNotNone(prog.get("CC6.1"))
+
+    # --- CLI: malformed JSON file -> exit 1, not traceback ---
+
+    def test_malformed_json_exits_1(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "bad.json")
+            with open(path, "w") as f:
+                f.write("{not valid json")
+            self.assertEqual(main(["--file", path, "report"]), 1)
+
+    def test_missing_control_field_json_exits_1(self):
+        """A structurally broken JSON program (missing 'id') exits 1 cleanly."""
+        import json as _json
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "bad.json")
+            with open(path, "w") as f:
+                _json.dump(
+                    {
+                        "company": "X",
+                        "framework": "SOC 2",
+                        "schema_version": 1,
+                        "controls": [{"category": "C", "title": "T"}],
+                    },
+                    f,
+                )
+            self.assertEqual(main(["--file", path, "report"]), 1)
+
+    # --- MCP server module is importable (no top-level crash) ---
+
+    def test_mcp_server_importable(self):
+        import importlib
+        mod = importlib.import_module("soc2box.mcp_server")
+        self.assertTrue(callable(mod.serve))
+
+    # --- gaps returns exit 0 when all controls are satisfied ---
+
+    def test_gaps_zero_exit_when_all_satisfied(self):
+        from soc2box import gap_list
+        p = new_program()
+        ref = NOW
+        # satisfy every applicable control
+        for c in p.controls:
+            if c.applicable:
+                add_evidence(p, c.id, "evidence", collected_at=_iso(1))
+        gaps = gap_list(p, ref)
+        self.assertEqual(gaps, [])
+
+    def test_gaps_cli_exit_0_when_all_satisfied(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "p.json")
+            main(["--file", path, "init"])
+            from soc2box import load_program, save_program
+            p = load_program(path)
+            for c in p.controls:
+                if c.applicable:
+                    add_evidence(p, c.id, "ev", collected_at=_iso(1))
+            save_program(p, path)
+            self.assertEqual(main(["--file", path, "gaps"]), 0)
+
+
 if __name__ == "__main__":
     unittest.main()

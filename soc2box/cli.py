@@ -157,7 +157,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             # non-zero exit when gaps remain: useful as a CI gate
             return 2 if gaps else 0
 
-    except (KeyError, ValueError, FileNotFoundError) as exc:
+    except (KeyError, ValueError, TypeError, OSError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 

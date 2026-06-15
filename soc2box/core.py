@@ -109,6 +109,10 @@ DEFAULT_CONTROLS: List[Dict[str, Any]] = [
 
 def new_program(company: str = "Acme Inc", framework: str = "SOC 2 Type II") -> Program:
     """Build a fresh program seeded with the default control library."""
+    if not company or not str(company).strip():
+        raise ValueError("company name must not be empty")
+    if not framework or not str(framework).strip():
+        raise ValueError("framework name must not be empty")
     controls = [Control(**spec) for spec in DEFAULT_CONTROLS]
     return Program(company=company, framework=framework, controls=controls)
 
@@ -120,12 +124,50 @@ def program_to_dict(p: Program) -> Dict[str, Any]:
     return asdict(p)
 
 
+_CONTROL_REQUIRED = {"id", "category", "title"}
+_CONTROL_KNOWN = {
+    "id", "category", "title", "cadence_days", "applicable", "owner", "evidence",
+}
+_EVIDENCE_KNOWN = {"artifact", "collected_at", "collected_by", "note"}
+
+
+def _parse_control(c: Dict[str, Any], index: int) -> Control:
+    """Deserialise one control dict; raise ValueError on structural errors."""
+    missing = _CONTROL_REQUIRED - c.keys()
+    if missing:
+        raise ValueError(
+            f"control[{index}] missing required field(s): {', '.join(sorted(missing))}"
+        )
+    unknown = c.keys() - _CONTROL_KNOWN
+    # strip unknown keys so forward-compat JSON doesn't crash
+    safe = {k: v for k, v in c.items() if k in _CONTROL_KNOWN and k != "evidence"}
+    ev_list: List[Evidence] = []
+    for j, e in enumerate(c.get("evidence") or []):
+        if not isinstance(e, dict):
+            raise ValueError(
+                f"control[{index}] evidence[{j}] is not an object"
+            )
+        e_missing = {"artifact", "collected_at"} - e.keys()
+        if e_missing:
+            raise ValueError(
+                f"control[{index}] evidence[{j}] missing field(s): "
+                f"{', '.join(sorted(e_missing))}"
+            )
+        safe_e = {k: v for k, v in e.items() if k in _EVIDENCE_KNOWN}
+        ev_list.append(Evidence(**safe_e))
+    if unknown:
+        pass  # silently ignore forward-compat extra fields
+    return Control(evidence=ev_list, **safe)
+
+
 def program_from_dict(d: Dict[str, Any]) -> Program:
+    if not isinstance(d, dict):
+        raise ValueError("program file must contain a JSON object at the top level")
     controls = []
-    for c in d.get("controls", []):
-        ev = [Evidence(**e) for e in c.get("evidence", [])]
-        cc = {k: v for k, v in c.items() if k != "evidence"}
-        controls.append(Control(evidence=ev, **cc))
+    for i, c in enumerate(d.get("controls") or []):
+        if not isinstance(c, dict):
+            raise ValueError(f"controls[{i}] is not an object")
+        controls.append(_parse_control(c, i))
     return Program(
         company=d.get("company", "Acme Inc"),
         framework=d.get("framework", "SOC 2 Type II"),
@@ -135,14 +177,23 @@ def program_from_dict(d: Dict[str, Any]) -> Program:
 
 
 def load_program(path: str) -> Program:
-    with open(path, "r", encoding="utf-8") as fh:
-        return program_from_dict(json.load(fh))
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            raw = json.load(fh)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"program file is not valid JSON: {exc}") from exc
+    except OSError as exc:
+        raise OSError(f"cannot read program file {path}: {exc}") from exc
+    return program_from_dict(raw)
 
 
 def save_program(p: Program, path: str) -> None:
-    with open(path, "w", encoding="utf-8") as fh:
-        json.dump(program_to_dict(p), fh, indent=2, sort_keys=True)
-        fh.write("\n")
+    try:
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(program_to_dict(p), fh, indent=2, sort_keys=True)
+            fh.write("\n")
+    except OSError as exc:
+        raise OSError(f"cannot write program file {path}: {exc}") from exc
 
 
 # ---------------------------------------------------------------------------
@@ -152,7 +203,11 @@ def add_evidence(p: Program, control_id: str, artifact: str,
                  collected_by: str = "unknown", note: str = "",
                  collected_at: Optional[str] = None) -> Evidence:
     """Attach a dated evidence artifact to a control. Raises KeyError if the
-    control id is not in the program."""
+    control id is not in the program, ValueError for bad input."""
+    if not control_id or not control_id.strip():
+        raise ValueError("control_id must not be empty")
+    if not artifact or not artifact.strip():
+        raise ValueError("artifact must not be empty")
     ctrl = p.get(control_id)
     if ctrl is None:
         raise KeyError(f"unknown control: {control_id}")
