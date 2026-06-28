@@ -1,0 +1,21 @@
+$ soc2box-emit --help
+
+usage: soc2box [-h] [--version] [--format {table,json}] [--file FILE]
+               {init,add,status,report,gaps} ...
+
+Self-hosted SOC 2 evidence collector & control tracker.
+
+positional arguments:
+  {init,add,status,report,gaps}
+    init                create a new program seeded with default controls
+    add                 attach evidence to a control
+    status              per-control evidence status
+    report              overall audit-readiness summary
+    gaps                controls needing attention, most urgent first
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+                        output format (default: table)
+  --file FILE           program file path (default: soc2_program.json)

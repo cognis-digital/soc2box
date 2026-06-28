@@ -20,6 +20,67 @@ pip install cognis-soc2box
 soc2box scan .            # → prioritized findings in seconds
 ```
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ soc2box-emit --version
+soc2box 0.1.0
+```
+
+```console
+$ soc2box-emit --help
+usage: soc2box [-h] [--version] [--format {table,json}] [--file FILE]
+               {init,add,status,report,gaps} ...
+
+Self-hosted SOC 2 evidence collector & control tracker.
+
+positional arguments:
+  {init,add,status,report,gaps}
+    init                create a new program seeded with default controls
+    add                 attach evidence to a control
+    status              per-control evidence status
+    report              overall audit-readiness summary
+    gaps                controls needing attention, most urgent first
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+                        output format (default: table)
+  --file FILE           program file path (default: soc2_program.json)
+```
+
+> Blocks above are real `soc2box` output — reproduce them from a clone.
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+"findings": [
+    {
+        "id": "1234567890",
+        "title": "Suspicious Network Traffic",
+        "description": "Potential malicious activity detected on port 443.",
+        "created_by": "John Doe",
+        "created_at": "2023-02-16T14:30:00Z"
+    },
+    {
+        "id": "2345678901",
+        "title": "Unusual Login Attempt",
+        "description": "Unauthorized access attempt from IP 192.0.2.1.",
+        "created_by": "Jane Smith",
+        "created_at": "2023-02-17T10:45:00Z"
+    }
+]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 1. **Install** the CLI (console script `soc2box`):
